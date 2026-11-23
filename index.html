@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Terrarium - Sistema de monitoramento e automação de estufa inteligente.">
+    <title>Terrarium | Monitoramento Inteligente</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="brand">
+            <div class="brand-icon">T</div>
+            <div>
+                <h1>Terrarium</h1>
+                <span>Estufa Inteligente</span>
+            </div>
+        </div>
+
+        <div class="connection">
+            <span class="status-dot"></span>
+            <span id="connection-status">Aguardando ESP32</span>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="welcome">
+            <div>
+                <span class="section-label">PAINEL DE CONTROLE</span>
+                <h2>Monitoramento da estufa</h2>
+                <p>Acompanhe as condições ambientais e o funcionamento do sistema.</p>
+            </div>
+
+            <div class="update-info">
+                <span>Última atualização</span>
+                <strong id="last-update">--:--:--</strong>
+            </div>
+        </section>
+
+        <section class="monitoring">
+            <div class="section-heading">
+                <h3>Monitoramento ambiental</h3>
+                <span>Dados dos sensores</span>
+            </div>
+
+            <div class="metrics-grid">
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span>Temperatura</span>
+                        <span class="metric-icon">°C</span>
+                    </div>
+                    <div class="metric-value" id="temperature">--</div>
+                    <span class="metric-description">Aguardando leitura</span>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span>Umidade do ar</span>
+                        <span class="metric-icon">%</span>
+                    </div>
+                    <div class="metric-value" id="air-humidity">--</div>
+                    <span class="metric-description">Aguardando leitura</span>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span>Umidade do solo</span>
+                        <span class="metric-icon">%</span>
+                    </div>
+                    <div class="metric-value" id="soil-humidity">--</div>
+                    <span class="metric-description">Aguardando leitura</span>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span>Luminosidade</span>
+                        <span class="metric-icon">lux</span>
+                    </div>
+                    <div class="metric-value" id="luminosity">--</div>
+                    <span class="metric-description">Aguardando leitura</span>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="system-section">
+
+            <div class="section-heading">
+                <h3>Estado do sistema</h3>
+                <span>Equipamentos e operação</span>
+            </div>
+
+            <div class="system-grid">
+
+                <article class="panel">
+                    <h4>Equipamentos</h4>
+
+                    <div class="device">
+                        <div class="device-info">
+                            <div class="device-icon">B</div>
+                            <div>
+                                <strong>Bomba de irrigação</strong>
+                                <span id="pump-status">Desligada</span>
+                            </div>
+                        </div>
+                        <span class="device-indicator" id="pump-indicator"></span>
+                    </div>
+
+                    <div class="device">
+                        <div class="device-info">
+                            <div class="device-icon">V</div>
+                            <div>
+                                <strong>Ventoinha</strong>
+                                <span id="fan-status">Desligada</span>
+                            </div>
+                        </div>
+                        <span class="device-indicator" id="fan-indicator"></span>
+                    </div>
+
+                    <div class="device">
+                        <div class="device-info">
+                            <div class="device-icon">L</div>
+                            <div>
+                                <strong>Iluminação</strong>
+                                <span id="light-status">Desligada</span>
+                            </div>
+                        </div>
+                        <span class="device-indicator" id="light-indicator"></span>
+                    </div>
+
+                </article>
+
+                <article class="panel">
+                    <h4>Controle de operação</h4>
+
+                    <div class="mode-description">
+                        <span>Modo de funcionamento</span>
+                        <strong id="current-mode">Automático</strong>
+                    </div>
+
+                    <div class="mode-buttons">
+                        <button class="mode-button active" id="auto-mode">
+                            Automático
+                        </button>
+                        <button class="mode-button" id="manual-mode">
+                            Manual
+                        </button>
+                    </div>
+
+                    <div class="manual-controls" id="manual-controls">
+
+                        <div class="control-row">
+                            <span>Bomba de irrigação</span>
+                            <button class="toggle-button" data-device="pump" disabled>
+                                OFF
+                            </button>
+                        </div>
+
+                        <div class="control-row">
+                            <span>Ventoinha</span>
+                            <button class="toggle-button" data-device="fan" disabled>
+                                OFF
+                            </button>
+                        </div>
+
+                        <div class="control-row">
+                            <span>Iluminação</span>
+                            <button class="toggle-button" data-device="light" disabled>
+                                OFF
+                            </button>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+        </section>
+
+        <section class="reservoir-section">
+            <div class="reservoir-card">
+                <div>
+                    <h4>Reservatório de água</h4>
+                    <p id="reservoir-status">Aguardando leitura do sistema</p>
+                </div>
+                <div class="reservoir-icon">H₂O</div>
+            </div>
+        </section>
+
+        <div class="demo-notice">
+            <span class="status-dot demo-dot"></span>
+            <span>Modo de demonstração: os dados e controles ainda não estão conectados ao ESP32.</span>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>Terrarium &copy; 2026 — Estufa Inteligente Automatizada</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
